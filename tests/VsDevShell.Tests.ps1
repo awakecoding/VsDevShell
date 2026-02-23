@@ -276,7 +276,7 @@ Describe 'VsDevShell' {
             }
 
             AfterEach {
-                Leave-VsDevShell -Force
+                Exit-VsDevShell -Force
                 Remove-Variable -Scope Global -Name VsDevShellState -ErrorAction SilentlyContinue
             }
 
@@ -301,7 +301,7 @@ Describe 'VsDevShell' {
                     [System.Environment]::GetEnvironmentVariable('REMOVED') | Should -BeNullOrEmpty
                 }
                 finally {
-                    Leave-VsDevShell -Force
+                    Exit-VsDevShell -Force
                     [System.Environment]::SetEnvironmentVariable('FOO', $oldFoo)
                     [System.Environment]::SetEnvironmentVariable('REMOVED', $oldRemoved)
                 }
@@ -327,7 +327,7 @@ Describe 'VsDevShell' {
                     [System.Environment]::GetEnvironmentVariable('MULTI') | Should -Be "line1`nline2"
                 }
                 finally {
-                    Leave-VsDevShell -Force
+                    Exit-VsDevShell -Force
                     [System.Environment]::SetEnvironmentVariable('FOO', $oldFoo)
                     [System.Environment]::SetEnvironmentVariable('MULTI', $oldMulti)
                 }
@@ -353,7 +353,7 @@ Describe 'VsDevShell' {
                     [System.Environment]::GetEnvironmentVariable('REMOVED') | Should -BeNullOrEmpty
                 }
                 finally {
-                    Leave-VsDevShell -Force
+                    Exit-VsDevShell -Force
                     [System.Environment]::SetEnvironmentVariable('FOO', $oldFoo)
                     [System.Environment]::SetEnvironmentVariable('REMOVED', $oldRemoved)
                 }
@@ -375,7 +375,7 @@ Describe 'VsDevShell' {
                     [System.Environment]::GetEnvironmentVariable('FOO') | Should -Be 'frompipeline'
                 }
                 finally {
-                    Leave-VsDevShell -Force
+                    Exit-VsDevShell -Force
                     [System.Environment]::SetEnvironmentVariable('FOO', $oldFoo)
                 }
             }
@@ -412,7 +412,7 @@ Describe 'VsDevShell' {
                     }
 
                     # Clear saved session state so the piped Enter can run
-                    Leave-VsDevShell
+                    Exit-VsDevShell
 
                     # Reset baseline
                     [System.Environment]::SetEnvironmentVariable('FOO', 'before')
@@ -433,14 +433,14 @@ Describe 'VsDevShell' {
                     }
                 }
                 finally {
-                    Leave-VsDevShell -Force
+                    Exit-VsDevShell -Force
                     foreach ($k in $keys) {
                         [System.Environment]::SetEnvironmentVariable($k, $saved[$k])
                     }
                 }
             }
 
-            It 'Can restore the pre-enter environment via Leave-VsDevShell' {
+            It 'Can restore the pre-enter environment via Exit-VsDevShell' {
                 $oldFoo = [System.Environment]::GetEnvironmentVariable('FOO')
                 $oldRemoved = [System.Environment]::GetEnvironmentVariable('REMOVED')
 
@@ -460,7 +460,7 @@ Describe 'VsDevShell' {
                     [System.Environment]::GetEnvironmentVariable('REMOVED') | Should -BeNullOrEmpty
                     ($null -ne $global:VsDevShellState) | Should -BeTrue
 
-                    Leave-VsDevShell
+                    Exit-VsDevShell
                     [System.Environment]::GetEnvironmentVariable('FOO') | Should -Be 'before'
                     [System.Environment]::GetEnvironmentVariable('REMOVED') | Should -Be 'x'
                     ($null -eq $global:VsDevShellState) | Should -BeTrue
@@ -472,7 +472,7 @@ Describe 'VsDevShell' {
                 }
             }
 
-            It 'Can restore using Leave-VsDevShell -EnvFilePath (symmetry with Enter -EnvFilePath)' {
+            It 'Can restore using Exit-VsDevShell -EnvFilePath (symmetry with Enter -EnvFilePath)' {
                 $path = Join-Path $TestDrive 'in/leave.env'
                 New-Item -ItemType Directory -Force -Path (Split-Path -Parent $path) | Out-Null
                 Set-Content -Encoding UTF8 -Path $path -Value @(
@@ -490,18 +490,18 @@ Describe 'VsDevShell' {
                     [System.Environment]::GetEnvironmentVariable('FOO') | Should -Be 'fromfile'
                     [System.Environment]::GetEnvironmentVariable('REMOVED') | Should -BeNullOrEmpty
 
-                    Leave-VsDevShell -EnvFilePath $path
+                    Exit-VsDevShell -EnvFilePath $path
                     [System.Environment]::GetEnvironmentVariable('FOO') | Should -Be 'before'
                     [System.Environment]::GetEnvironmentVariable('REMOVED') | Should -Be 'x'
                 }
                 finally {
-                    Leave-VsDevShell -Force
+                    Exit-VsDevShell -Force
                     [System.Environment]::SetEnvironmentVariable('FOO', $oldFoo)
                     [System.Environment]::SetEnvironmentVariable('REMOVED', $oldRemoved)
                 }
             }
 
-            It 'Binds Leave-VsDevShell EnvFilePath from pipeline property (FileInfo.FullName)' {
+            It 'Binds Exit-VsDevShell EnvFilePath from pipeline property (FileInfo.FullName)' {
                 $path = Join-Path $TestDrive 'in/leave2.env'
                 New-Item -ItemType Directory -Force -Path (Split-Path -Parent $path) | Out-Null
                 Set-Content -Encoding UTF8 -Path $path -Value @(
@@ -514,11 +514,11 @@ Describe 'VsDevShell' {
                     Enter-VsDevShell -EnvFilePath $path
                     [System.Environment]::GetEnvironmentVariable('FOO') | Should -Be 'fromfile'
 
-                    Get-Item -Path $path | Leave-VsDevShell
+                    Get-Item -Path $path | Exit-VsDevShell
                     [System.Environment]::GetEnvironmentVariable('FOO') | Should -Be 'before'
                 }
                 finally {
-                    Leave-VsDevShell -Force
+                    Exit-VsDevShell -Force
                     [System.Environment]::SetEnvironmentVariable('FOO', $oldFoo)
                 }
             }
@@ -550,11 +550,11 @@ Describe 'VsDevShell' {
                     Enter-VsDevShell -EnvFilePath $path
                     [System.Environment]::GetEnvironmentVariable($sentinelKey) | Should -Be 'after'
 
-                    Leave-VsDevShell -EnvFilePath $path
+                    Exit-VsDevShell -EnvFilePath $path
                     [System.Environment]::GetEnvironmentVariable($sentinelKey) | Should -Be 'before'
                 }
                 finally {
-                    Leave-VsDevShell -Force
+                    Exit-VsDevShell -Force
                     [System.Environment]::SetEnvironmentVariable($sentinelKey, $oldSentinel)
                 }
             }

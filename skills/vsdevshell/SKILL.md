@@ -40,7 +40,7 @@ If the user’s command references one of these tools (or a build script calls t
 
 To restore the original environment (the values captured when you entered), use:
 
-- `Leave-VsDevShell`
+- `Exit-VsDevShell`
 
 ### Important: one-time per PowerShell process
 
@@ -129,7 +129,7 @@ If you want to see what would change without modifying your current process envi
 - Compute + apply VS dev environment:
   - `Enter-VsDevShell -Arch x64 -HostArch x64`
 - Restore original values captured at enter time:
-  - `Leave-VsDevShell`
+  - `Exit-VsDevShell`
 
 ### Export / Import `.env`
 
@@ -146,7 +146,7 @@ Apply a `.env` file in the current session:
 
 Restore only the keys listed in the file (using the saved pre-enter snapshot):
 
-- `Leave-VsDevShell -EnvFilePath .\vsdev.env`
+- `Exit-VsDevShell -EnvFilePath .\vsdev.env`
 
 Fully piped chain (compute → export → import → apply):
 

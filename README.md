@@ -10,7 +10,7 @@ Enter-VsDevShell x64
 Restore the original environment:
 
 ```powershell
-Leave-VsDevShell
+Exit-VsDevShell
 ```
 
 That's it! Use `Get-Help Enter-VsDevShell` to find all available options.
@@ -99,11 +99,11 @@ Get-Item -Path $env:GITHUB_ENV | Enter-VsDevShell
 Restore only the keys listed in an env file (using the saved pre-enter snapshot):
 
 ```powershell
-Leave-VsDevShell -EnvFilePath $env:GITHUB_ENV
+Exit-VsDevShell -EnvFilePath $env:GITHUB_ENV
 ```
 
 Pipeline form:
 
 ```powershell
-Get-Item -Path $env:GITHUB_ENV | Leave-VsDevShell
+Get-Item -Path $env:GITHUB_ENV | Exit-VsDevShell
 ```

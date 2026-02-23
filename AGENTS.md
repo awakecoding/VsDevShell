@@ -9,14 +9,14 @@ Guidance for AI agents working in this repository.
 It exports these public functions:
 
 - `Enter-VsDevShell`: applies the Visual Studio developer environment variables to the current PowerShell process.
-- `Leave-VsDevShell`: restores the pre-enter environment values captured by `Enter-VsDevShell`.
+- `Exit-VsDevShell`: restores the pre-enter environment values captured by `Enter-VsDevShell`.
 - `Get-VsDevEnv`: computes and returns the set of environment variables that would change.
 - `Export-VsDevEnv`: writes the computed env delta to a standard `.env` file (UTF-8 no BOM), optionally updating an existing file.
 - `Import-VsDevEnv`: parses a `.env` file back into a `VsDevEnv` (ordered hashtable) that can be piped into `Enter-VsDevShell`.
 
 ## Repo layout
 
-- `VsDevShell/VsDevShell.psd1`: module manifest (exports `Enter-VsDevShell`, `Leave-VsDevShell`, `Get-VsDevEnv`, `Export-VsDevEnv`, `Import-VsDevEnv`).
+- `VsDevShell/VsDevShell.psd1`: module manifest (exports `Enter-VsDevShell`, `Exit-VsDevShell`, `Get-VsDevEnv`, `Export-VsDevEnv`, `Import-VsDevEnv`).
 - `VsDevShell/VsDevShell.psm1`: implementation.
 - `tests/`: Pester tests.
 - `skills/`: agent skills documentation.
@@ -50,7 +50,7 @@ It also includes variables that were present before but are not present in the `
 - Captures a pre-enter snapshot for the keys it is about to change in `$global:VsDevShellState`.
 - Refuses to “enter” again while active unless `-Force` is provided.
 
-`Leave-VsDevShell`:
+`Exit-VsDevShell`:
 
 - Restores environment variables from `$global:VsDevShellState.PreEnv`.
 - Supports `-EnvFilePath` to restore only the keys listed in that `.env` file.
@@ -87,7 +87,7 @@ See available parameters:
 
 ```powershell
 Get-Help Enter-VsDevShell -Full
-Get-Help Leave-VsDevShell -Full
+Get-Help Exit-VsDevShell -Full
 Get-Help Get-VsDevEnv -Full
 Get-Help Export-VsDevEnv -Full
 Get-Help Import-VsDevEnv -Full
@@ -138,7 +138,7 @@ Invoke-Pester -Path .\tests
 
 ## Making changes (guardrails)
 
-- Keep the public API stable (`Enter-VsDevShell`, `Leave-VsDevShell`, `Get-VsDevEnv`, `Export-VsDevEnv`, `Import-VsDevEnv`) unless explicitly asked to change it.
+- Keep the public API stable (`Enter-VsDevShell`, `Exit-VsDevShell`, `Get-VsDevEnv`, `Export-VsDevEnv`, `Import-VsDevEnv`) unless explicitly asked to change it.
 - Prefer changes that still allow `Import-Module` to succeed even when Visual Studio is not installed (fail only when commands are invoked).
 - Avoid adding new dependencies; this module is intended to be lightweight.
 - If you add parameters, ensure they are forwarded correctly to `VsDevCmd.bat` and are covered by a simple manual verification snippet in this file.

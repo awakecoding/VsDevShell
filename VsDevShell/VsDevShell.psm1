@@ -572,7 +572,7 @@ function Enter-VsDevShell
 
     process {
         if ($global:VsDevShellState -and -not $Force) {
-            throw "VsDevShell is already active in this session. Call Leave-VsDevShell first (or use -Force to overwrite the saved state)."
+            throw "VsDevShell is already active in this session. Call Exit-VsDevShell first (or use -Force to overwrite the saved state)."
         }
 
         if ($Force -and $global:VsDevShellState) {
@@ -607,7 +607,7 @@ function Enter-VsDevShell
     }
 }
 
-function Leave-VsDevShell
+function Exit-VsDevShell
 {
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', DefaultParameterSetName='All')]
     param(
