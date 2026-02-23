@@ -8,7 +8,7 @@
 RootModule = 'VsDevShell.psm1'
 
 # Version number of this module.
-ModuleVersion = '2025.1.0'
+ModuleVersion = '2026.1.0'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Desktop', 'Core'
@@ -65,7 +65,7 @@ CLRVersion = '4.0'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @('Enter-VsDevShell', 'Get-VsDevEnv')
+FunctionsToExport = @('Enter-VsDevShell', 'Leave-VsDevShell', 'Get-VsDevEnv', 'Export-VsDevEnv', 'Import-VsDevEnv')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
