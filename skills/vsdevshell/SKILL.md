@@ -1,9 +1,9 @@
 ---
-name: enable-vsdevshell
-description: Use the installed VsDevShell module to enter a Visual Studio Developer Shell environment from PowerShell.
+name: vsdevshell
+description: Enter the Visual Studio Developer environment in the current PowerShell session via the VsDevShell module (MSBuild/CL toolchain env vars).
 ---
 
-# Enable Visual Studio Developer Shell (via VsDevShell module)
+# VsDevShell (Visual Studio Developer Shell)
 
 Use this skill when you need to run Windows build tools that typically only work after a Visual Studio Developer Prompt / `VsDevCmd.bat` has been applied.
 
