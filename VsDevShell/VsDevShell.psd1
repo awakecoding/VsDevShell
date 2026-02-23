@@ -94,10 +94,10 @@ PrivateData = @{
         Tags = 'VsDevShell', 'Visual', 'Studio', 'Developer', 'Shell'
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/awakecoding/VsDevShell-ps/blob/master/LICENSE'
+        LicenseUri = 'https://github.com/awakecoding/VsDevShell/blob/master/LICENSE'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/awakecoding/VsDevShell-ps'
+        ProjectUri = 'https://github.com/awakecoding/VsDevShell'
 
         # A URL to an icon representing this module.
         # IconUri = ''
